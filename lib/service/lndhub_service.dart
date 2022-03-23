@@ -1,7 +1,8 @@
 import 'dart:convert';
 
+import 'package:eventsource/eventsource.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:http/browser_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:satstreamer/models/balance.dart';
 import 'package:satstreamer/models/lndhub_auth.dart';
@@ -69,5 +70,15 @@ class LNDHubService extends GetxService {
           snackPosition: SnackPosition.BOTTOM);
       throw Exception('Error fetching balance');
     }
+  }
+
+  Future<void> streamInvoices() async {
+    EventSource eventSource = await EventSource.connect(
+        "https://$host/invoices/stream",
+        headers: {"Authorization": "Bearer $accessToken"},
+        client: BrowserClient());
+    eventSource.listen((event) {
+      Get.snackbar("Event", event.data.toString());
+    });
   }
 }

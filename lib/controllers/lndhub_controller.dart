@@ -14,6 +14,6 @@ class LNDhubController extends GetxController {
     var pw = pwController.text;
     svc.init(login, pw);
     await svc.fetchToken();
-    await svc.fetchBalance();
+    await svc.streamInvoices();
   }
 }
