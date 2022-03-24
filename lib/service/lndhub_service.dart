@@ -28,7 +28,7 @@ class LNDHubService extends GetxService {
 
   Future<void> fetchToken() async {
     var response = await http.post(
-      Uri.http(host, '/auth'),
+      Uri.https(host, '/auth'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -74,7 +74,7 @@ class LNDHubService extends GetxService {
 
   Stream<dynamic> streamInvoices() {
     final channel = WebSocketChannel.connect(
-      Uri.parse('ws://localhost:3000/invoices/stream?token=$accessToken'),
+      Uri.parse('wss://$host/invoices/stream?token=$accessToken'),
     );
     return channel.stream;
   }
