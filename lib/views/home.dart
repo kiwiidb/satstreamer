@@ -17,11 +17,12 @@ class Home extends StatelessWidget {
             controller: c.connectionStringController,
             decoration: const InputDecoration.collapsed(
                 hintText: 'LNDhub connection string'),
-            obscureText: true,
           ),
-          TextButton(
-              onPressed: () => c.fetchToken(),
-              child: const Text("Authenticate"))
+          const SizedBox(
+            height: 30,
+          ),
+          ElevatedButton(
+              onPressed: () => c.fetchToken(), child: const Text("Stream"))
         ]),
       ),
     ));

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:satstreamer/models/connection.dart';
 import 'package:satstreamer/models/invoice.dart';
 import 'package:satstreamer/service/lndhub_service.dart';
@@ -12,9 +13,33 @@ class LNDhubController extends GetxController {
   final TextEditingController connectionStringController =
       TextEditingController();
   final speaker = FlutterTts();
+  final LocalStorage lndhubStorage = LocalStorage('lndhub_credentials');
+
+  @override
+  void onInit() async {
+    await lndhubStorage.ready;
+    var connection = fetchConnectionString();
+    if (connection != null) {
+      connectionStringController.text = connection["key"].toString();
+    }
+    super.onInit();
+  }
+
+  Future<void> setConnectionString() async {
+    await lndhubStorage
+        .setItem("connectionstring", {"key": connectionStringController.text});
+  }
+
+  dynamic fetchConnectionString() {
+    return lndhubStorage.getItem("connectionstring");
+  }
 
   void fetchToken() async {
     var connection = parseConnectionString(connectionStringController.text);
+    await setConnectionString();
+
+    var fetched = fetchConnectionString();
+    print(fetched["key"]);
     svc.init(connection!.host!, connection.login!, connection.password!);
     await svc.fetchToken();
     var stream = svc.streamInvoices();
