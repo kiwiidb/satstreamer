@@ -14,13 +14,9 @@ class Home extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 600.0, vertical: 100),
         child: Column(children: [
           TextFormField(
-            controller: c.loginController,
-            decoration:
-                const InputDecoration.collapsed(hintText: 'LNDhub login'),
-          ),
-          TextFormField(
-            controller: c.pwController,
-            decoration: const InputDecoration(hintText: 'LNDhub password'),
+            controller: c.connectionStringController,
+            decoration: const InputDecoration.collapsed(
+                hintText: 'LNDhub connection string'),
             obscureText: true,
           ),
           TextButton(

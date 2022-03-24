@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:eventsource/eventsource.dart';
 import 'package:get/get.dart';
-import 'package:http/browser_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:satstreamer/models/balance.dart';
 import 'package:satstreamer/models/lndhub_auth.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class LNDHubService extends GetxService {
   String host;
@@ -14,21 +13,22 @@ class LNDHubService extends GetxService {
   String accessToken;
   String refreshToken;
   LNDHubService({
-    this.host = "clnhub.mainnet.getalby.com",
+    this.host = "",
     this.login = "",
     this.password = "",
     this.accessToken = "",
     this.refreshToken = "",
   });
 
-  void init(String login, String password) {
+  void init(String host, String login, String password) {
     this.login = login;
     this.password = password;
+    this.host = host;
   }
 
   Future<void> fetchToken() async {
     var response = await http.post(
-      Uri.https(host, '/auth'),
+      Uri.http(host, '/auth'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -72,13 +72,10 @@ class LNDHubService extends GetxService {
     }
   }
 
-  Future<void> streamInvoices() async {
-    EventSource eventSource = await EventSource.connect(
-        "https://$host/invoices/stream",
-        headers: {"Authorization": "Bearer $accessToken"},
-        client: BrowserClient());
-    eventSource.listen((event) {
-      Get.snackbar("Event", event.data.toString());
-    });
+  Stream<dynamic> streamInvoices() {
+    final channel = WebSocketChannel.connect(
+      Uri.parse('ws://localhost:3000/invoices/stream?token=$accessToken'),
+    );
+    return channel.stream;
   }
 }
