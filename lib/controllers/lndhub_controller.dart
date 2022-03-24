@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 import 'package:satstreamer/models/connection.dart';
 import 'package:satstreamer/models/invoice.dart';
 import 'package:satstreamer/service/lndhub_service.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class LNDhubController extends GetxController {
   final LNDHubService svc = Get.put((LNDHubService()));
   final TextEditingController connectionStringController =
       TextEditingController();
+  final speaker = FlutterTts();
 
   void fetchToken() async {
     var connection = parseConnectionString(connectionStringController.text);
@@ -19,6 +21,8 @@ class LNDhubController extends GetxController {
     stream.listen((event) {
       var payload = InvoiceResponse.fromJson(jsonDecode(event));
       Get.snackbar("New payment", payload.description.toString());
+      speaker.setLanguage("en-US");
+      speaker.speak(payload.description.toString());
     });
   }
 
