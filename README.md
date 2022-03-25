@@ -1,16 +1,31 @@
-# satstreamer
+# Satstreamer
 
-A new Flutter project.
+Live version at https://satstreamer.vercel.app.
 
-## Getting Started
+Interact with the audience of your livestream through Lightning donations.
 
-This project is a starting point for a Flutter application.
+- Lightning Address compatible
+- Text-to-speech: comedy ensured by reading out the messages or questions from you audience
+- I am using [Streamlabs](https://streamlabs.com) to overlay this web app on a livestream.
 
-A few resources to get you started if this is your first Flutter project:
+## Getting started
+- A [fork](https://github.com/getAlby/lndhub.go/pull/135) of LNDhub.go is currently needed for this functionality.
+- You also need Lightning Address endpoints that are compatible with the latest version of LNDhub.go.
+With [Easy LN Address](https://github.com/kiwiidb/easy-ln-address), you can have a Lightning Address on your own domain (you@yourdomain.com)
+that is powered by a LNDhub.go server like https://ln.getalby.com.
+- Import your LNDhub.go connection string to start streaming incoming payments.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Regtest setup
+You can use Alby's regtest environment to test out payments.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Import 1 account in https://satstreamer.vercel.app
+
+`lndhub://aW2Pl8oMZmnjEqnpshf4:Gbx1MRxsmLta6QEscaUl@https://clnhub.regtest.getalby.com`
+
+The Lightning address associated with this account is `test@regtest-address.vercel.app`.
+
+And import 1 account in [Alby](https://getalby.com) or [Bluewallet](https://bluewallet.io) for sending:
+
+`lndhub://KxGvxBw1XqfD9LjfmdEO:TQuWImQ4fSueTunpzFGx@https://clnhub.regtest.getalby.com`
+
+Your donation should then show up in the web application and the comment should be read aloud.
