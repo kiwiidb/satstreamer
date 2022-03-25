@@ -43,14 +43,19 @@ class LNDhubController extends GetxController {
     await svc.fetchToken();
     var stream = svc.streamInvoices();
     stream.listen((event) {
-      if (event["type"] == "keepalive") {
+      final InvoiceEvent payload = InvoiceEvent.fromJson(jsonDecode(event));
+
+      if (payload.type == "keepalive") {
         print("keepalive");
         return;
       }
-      var payload = InvoiceResponse.fromJson(jsonDecode(event["invoice"]));
-      Get.snackbar("New payment", payload.description.toString());
+      if (payload.invoice == null) {
+        return;
+      }
+      String description = payload.invoice!.description!;
+      Get.snackbar("New payment", description.toString());
       speaker.setLanguage("en-US");
-      speaker.speak(payload.description.toString());
+      speaker.speak(description.toString());
     });
   }
 

@@ -1,3 +1,15 @@
+class InvoiceEvent {
+  String? type;
+  InvoiceResponse? invoice;
+  InvoiceEvent({this.type, this.invoice});
+  InvoiceEvent.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    invoice = json['invoice'] != null
+        ? InvoiceResponse.fromJson(json['invoice'])
+        : null;
+  }
+}
+
 class InvoiceResponse {
   int? amt;
   String? description;
