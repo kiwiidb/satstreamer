@@ -3,17 +3,25 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:satstreamer/controllers/home_controller.dart';
 import 'package:satstreamer/models/connection.dart';
 import 'package:satstreamer/models/invoice.dart';
 import 'package:satstreamer/service/lndhub_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class LNDhubController extends GetxController {
+  final HomeController hc = Get.put(HomeController());
   final LNDHubService svc = Get.put((LNDHubService()));
   final TextEditingController connectionStringController =
       TextEditingController();
   final speaker = FlutterTts();
   final LocalStorage lndhubStorage = LocalStorage('lndhub_credentials');
+  var host = "".obs;
+  late WebSocketChannel channel;
+  var lastPayment = InvoiceEvent().obs;
+  var paymentHistory = <InvoiceEvent>[].obs;
+  var receivedPayment = false.obs;
 
   @override
   void onInit() async {
@@ -34,24 +42,43 @@ class LNDhubController extends GetxController {
     return lndhubStorage.getItem("connectionstring");
   }
 
-  void fetchToken() async {
-    var connection = parseConnectionString(connectionStringController.text);
-    await setConnectionString();
+  void disconnect() async {
+    await channel.sink.close();
+    hc.setTab(0);
+  }
 
-    var fetched = fetchConnectionString();
-    svc.init(connection!.host!, connection.login!, connection.password!);
+  void fetchTokenAndStartStream() async {
+    var connection = parseConnectionString(connectionStringController.text);
+    if (connection == null ||
+        connection.host == null ||
+        connection.login == null ||
+        connection.password == null) {
+      Get.snackbar("Wrong connection string",
+          "Make sure your connection string has the righ format.");
+      return;
+    }
+
+    host.value = connection.host!;
+    await setConnectionString();
+    fetchConnectionString();
+
+    svc.init(connection.host!, connection.login!, connection.password!);
     await svc.fetchToken();
-    var stream = svc.streamInvoices();
-    stream.listen((event) {
+    var channel = svc.streamInvoices();
+    this.channel = channel;
+    hc.setTab(1);
+    channel.stream.listen((event) {
       final InvoiceEvent payload = InvoiceEvent.fromJson(jsonDecode(event));
 
       if (payload.type == "keepalive") {
-        print("keepalive");
         return;
       }
       if (payload.invoice == null) {
         return;
       }
+      lastPayment.value = payload;
+      receivedPayment.value = true;
+      paymentHistory.add(payload);
       String description = payload.invoice!.description!;
       Get.snackbar("New payment", description.toString());
       speaker.setLanguage("en-US");

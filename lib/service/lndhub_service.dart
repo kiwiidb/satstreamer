@@ -72,10 +72,10 @@ class LNDHubService extends GetxService {
     }
   }
 
-  Stream<dynamic> streamInvoices() {
+  WebSocketChannel streamInvoices() {
     final channel = WebSocketChannel.connect(
       Uri.parse('wss://$host/invoices/stream?token=$accessToken'),
     );
-    return channel.stream;
+    return channel;
   }
 }

@@ -5,7 +5,7 @@ import 'views/home.dart';
 
 void main() {
   runApp(GetMaterialApp(
-    home: const Home(),
+    home: Home(),
     title: "Sat Streamer",
     theme: ThemeData(
       // Define the default brightness and colors.

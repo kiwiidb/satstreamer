@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:satstreamer/controllers/home_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/lndhub_controller.dart';
@@ -32,7 +33,8 @@ class ConnectLNDHub extends StatelessWidget {
           height: 30,
         ),
         ElevatedButton(
-            onPressed: () => c.fetchToken(), child: const Text("Stream")),
+            onPressed: () => c.fetchTokenAndStartStream(),
+            child: const Text("Stream")),
         const SizedBox(
           height: 30,
         ),
