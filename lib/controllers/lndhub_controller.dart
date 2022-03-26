@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:bech32/bech32.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
@@ -25,11 +26,14 @@ class LNDhubController extends GetxController {
   var paymentHistory = <InvoiceEvent>[].obs;
   var receivedPayment = false.obs;
   var showMediaFromPayments = true.obs;
+  var showWebCam = false.obs;
   var autoOpenLinks = true.obs;
   var textToSpeech = true.obs;
   var volume = 5.obs;
   var language = "en-US".obs;
   var languages = <String>[].obs;
+  final TextEditingController lnAddressController = TextEditingController();
+  var lnurl = "".obs;
 
   @override
   void onInit() async {
@@ -42,6 +46,8 @@ class LNDhubController extends GetxController {
     for (String l in langs) {
       languages.add(l);
     }
+    lnAddressController.text = "you@example.com";
+    setLNURL();
     super.onInit();
   }
 
@@ -72,6 +78,22 @@ class LNDhubController extends GetxController {
   void disconnect() async {
     await channel.sink.close();
     hc.setTab(0);
+  }
+
+  void setLNURL() {
+    Bech32Codec codec = const Bech32Codec();
+    var parts = lnAddressController.text.split("@");
+    if (parts.length != 2) {
+      return;
+    }
+    var host = parts[1];
+    var user = parts[0];
+    var input = "https://$host/.well-known/lnurlp/$user";
+    var inputBytes = utf8.encode(input);
+    var convertedBytes = convertBech32(inputBytes);
+    var result =
+        codec.encode(Bech32("lnurl", convertedBytes), 200).toUpperCase();
+    lnurl.value = result;
   }
 
   void fetchTokenAndStartStream() async {
@@ -151,5 +173,46 @@ class LNDhubController extends GetxController {
     }
     return Connection(
         host: host, login: loginParts[0], password: loginParts[1]);
+  }
+
+  /// Converts a list of character positions in the bech32 alphabet ("words")
+  /// to binary data.
+  List<int> convertBech32(List<int> words) {
+    final res = convert(words, 8, 5, true);
+    return res;
+  }
+
+  /// Taken from bech32 (bitcoinjs): https://github.com/bitcoinjs/bech32
+  List<int> convert(List<int> data, int inBits, int outBits, bool pad) {
+    var value = 0;
+    var bits = 0;
+    var maxV = (1 << outBits) - 1;
+
+    var result = <int>[];
+    for (var i = 0; i < data.length; ++i) {
+      value = (value << inBits) | data[i];
+      bits += inBits;
+
+      while (bits >= outBits) {
+        bits -= outBits;
+        result.add((value >> bits) & maxV);
+      }
+    }
+
+    if (pad) {
+      if (bits > 0) {
+        result.add((value << (outBits - bits)) & maxV);
+      }
+    } else {
+      if (bits >= inBits) {
+        throw Exception('Excess padding');
+      }
+
+      if ((value << (outBits - bits)) & maxV > 0) {
+        throw Exception('Non-zero padding');
+      }
+    }
+
+    return result;
   }
 }

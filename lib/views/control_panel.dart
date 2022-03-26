@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_elegant_number_button/flutter_elegant_number_button.dart';
 import 'package:get/get.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../controllers/lndhub_controller.dart';
 
@@ -30,6 +31,21 @@ class ControlPanel extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        children: [
+                          const Text("Show webcam"),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Checkbox(
+                              value: c.showWebCam.value,
+                              activeColor: Colors.purple,
+                              onChanged: (bool? value) {
+                                c.showWebCam.value = value!;
+                                return;
+                              }),
+                        ],
+                      ),
                       Row(
                         children: [
                           const Text(
@@ -116,6 +132,43 @@ class ControlPanel extends StatelessWidget {
                             },
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: c.lnAddressController,
+                          onChanged: (String? value) {
+                            c.setLNURL();
+                          },
+                          style: const TextStyle(color: Colors.purple),
+                          decoration: const InputDecoration(
+                            hintStyle: TextStyle(color: Colors.purple),
+                            labelText: "LN Address",
+                            labelStyle: TextStyle(color: Colors.purple),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purple),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0))),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purple),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0))),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Obx(
+                            () => QrImage(
+                              data: c.lnurl.value,
+                              size: 200.0,
+                            ),
+                          ),
+                        ),
                       ),
                     ]);
               }),
