@@ -17,7 +17,6 @@ class NewPaymentView extends StatelessWidget {
           return const Text("Waiting for payment...");
         } else {
           var payment = c.lastPayment.value.invoice!;
-          var satvalue = payment.amt;
           var msg = payment.description!;
           return Container(
             decoration: BoxDecoration(
@@ -72,7 +71,7 @@ class NewPaymentView extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.purple[300],
+                          color: Colors.grey[300],
                           borderRadius: BorderRadius.circular(20)),
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),

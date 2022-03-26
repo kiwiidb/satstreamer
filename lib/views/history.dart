@@ -9,11 +9,14 @@ class HistoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Align(
-          alignment: Alignment.topLeft,
+        const SizedBox(
+          width: 400,
           child: Text(
-            "Past donations",
-            textAlign: TextAlign.left,
+            "Contribution history",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.purple),
           ),
         ),
         const SizedBox(
@@ -36,7 +39,45 @@ class HistoryView extends StatelessWidget {
                   var item = controller.paymentHistory[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(item.invoice!.description!),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(children: [
+                              Text(
+                                item.invoice!.amt.toString(),
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.orange[700],
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(
+                                    " sat",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.orange[700]),
+                                  ),
+                                ],
+                              )
+                            ]),
+                            SelectableText(
+                              item.invoice!.description!,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 },
               );

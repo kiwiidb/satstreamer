@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/lndhub_controller.dart';
+import 'control_panel.dart';
 import 'history.dart';
 import 'new_payment.dart';
 
@@ -38,6 +39,7 @@ class StreamView extends StatelessWidget {
               width: 100,
             ),
             NewPaymentView(),
+            ControlPanel(),
           ],
         ),
       ],

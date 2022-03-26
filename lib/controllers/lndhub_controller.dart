@@ -103,12 +103,14 @@ class LNDhubController extends GetxController {
     });
     //debugging
     receivedPayment.value = true;
-    lastPayment.value = InvoiceEvent(
+    var mock = InvoiceEvent(
         type: "invoice",
         invoice: InvoiceResponse(
             amt: 1000,
             description:
                 "mocking payment description need a long text here. hello hellohellohellohellohellohellohellohellohello"));
+    lastPayment.value = mock;
+    paymentHistory.add(mock);
   }
 
   //lndhub://user:pw@https://host.com

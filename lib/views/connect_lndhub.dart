@@ -48,7 +48,8 @@ class ConnectLNDHub extends StatelessWidget {
                     },
                 child: const Text("Instructions")),
             TextButton(
-                onPressed: () => {launch("https://youtube.com/todo")},
+                onPressed: () =>
+                    {launch("https://youtu.be/INyD8XhmTas?t=2133")},
                 child: const Text("Demo")),
           ],
         )
