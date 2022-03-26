@@ -19,14 +19,81 @@ class NewPaymentView extends StatelessWidget {
           var payment = c.lastPayment.value.invoice!;
           var satvalue = payment.amt;
           var msg = payment.description!;
-          return Column(
-            children: [
-              Text("New donation of $satvalue sats!"),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(msg),
-            ],
+          return Container(
+            decoration: BoxDecoration(
+                border: Border.all(), borderRadius: BorderRadius.circular(30)),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: const [
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "Latest contribution: ",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        payment.amt.toString(),
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.orange[700],
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 3,
+                          ),
+                          Text(
+                            " sat",
+                            style: TextStyle(
+                                fontSize: 18, color: Colors.orange[700]),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.purple[300],
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: SelectableText(
+                          msg,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      )),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    c.getRandomGif(),
+                    width: 300,
+                  ),
+                ),
+              ],
+            ),
           );
         }
       })),

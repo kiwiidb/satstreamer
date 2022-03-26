@@ -64,7 +64,7 @@ class Home extends StatelessWidget {
               onPressed: () =>
                   {launch("https://bolt.fun/hackathons/shock-the-web/")},
               child: Image.asset(
-                "images/boltfun.png",
+                "images/logo-guide.png",
               ),
             )
           ],

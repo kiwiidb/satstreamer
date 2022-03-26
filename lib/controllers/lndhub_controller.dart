@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,22 @@ class LNDhubController extends GetxController {
       connectionStringController.text = connection["key"].toString();
     }
     super.onInit();
+  }
+
+  String getRandomGif() {
+    var gifs = [
+      'images/baby.gif',
+      'images/leo-laser.gif',
+      'images/leo.gif',
+      'images/lightning.gif',
+      'images/margot.gif',
+      'images/octo.gif',
+      'images/rich.gif',
+      'images/spongebob.gif',
+      'images/vince.gif',
+    ];
+    final _random = new Random();
+    return gifs[_random.nextInt(gifs.length)];
   }
 
   Future<void> setConnectionString() async {
@@ -84,6 +101,14 @@ class LNDhubController extends GetxController {
       speaker.setLanguage("en-US");
       speaker.speak(description.toString());
     });
+    //debugging
+    receivedPayment.value = true;
+    lastPayment.value = InvoiceEvent(
+        type: "invoice",
+        invoice: InvoiceResponse(
+            amt: 1000,
+            description:
+                "mocking payment description need a long text here. hello hellohellohellohellohellohellohellohellohello"));
   }
 
   //lndhub://user:pw@https://host.com
