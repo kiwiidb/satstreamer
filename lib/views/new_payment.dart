@@ -18,6 +18,17 @@ class NewPaymentView extends StatelessWidget {
         } else {
           var payment = c.lastPayment.value.invoice!;
           var msg = payment.description!;
+          var img = Image.asset(
+            c.getRandomGif(),
+            width: 300,
+          );
+          if (payment.description!.isImageFileName &&
+              c.showMediaFromPayments.value) {
+            img = Image.network(
+              payment.description!,
+              width: 300,
+            );
+          }
           return Container(
             width: 400,
             decoration: BoxDecoration(
@@ -87,10 +98,7 @@ class NewPaymentView extends StatelessWidget {
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
-                    c.getRandomGif(),
-                    width: 300,
-                  ),
+                  child: img,
                 ),
               ],
             ),

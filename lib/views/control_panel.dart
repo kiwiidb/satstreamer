@@ -21,6 +21,11 @@ class ControlPanel extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Obx(() {
+                var items = <DropdownMenuItem<String>>[];
+                for (dynamic type in c.languages) {
+                  items.add(DropdownMenuItem(
+                      value: type as String?, child: Text(type as String)));
+                }
                 return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,6 +38,7 @@ class ControlPanel extends StatelessWidget {
                           ),
                           Checkbox(
                               value: c.showMediaFromPayments.value,
+                              activeColor: Colors.purple,
                               onChanged: (bool? value) {
                                 c.showMediaFromPayments.value = value!;
                                 return;
@@ -46,6 +52,7 @@ class ControlPanel extends StatelessWidget {
                             width: 5,
                           ),
                           Checkbox(
+                              activeColor: Colors.purple,
                               value: c.autoOpenLinks.value,
                               onChanged: (bool? value) {
                                 c.autoOpenLinks.value = value!;
@@ -60,12 +67,16 @@ class ControlPanel extends StatelessWidget {
                             width: 5,
                           ),
                           Checkbox(
+                              activeColor: Colors.purple,
                               value: c.textToSpeech.value,
-                              onChanged: (bool? value) {
+                              onChanged: (bool? value) async {
                                 c.textToSpeech.value = value!;
                                 return;
                               }),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 2,
                       ),
                       Row(
                         children: [
@@ -73,12 +84,16 @@ class ControlPanel extends StatelessWidget {
                           const SizedBox(
                             width: 5,
                           ),
-                          DropdownButton(items: const [
-                            DropdownMenuItem(
-                              child: Text("test"),
-                            )
-                          ], onChanged: (dynamic item) {})
+                          DropdownButton(
+                              value: c.language.value,
+                              items: items,
+                              onChanged: (dynamic item) async {
+                                c.language.value = item;
+                              })
                         ],
+                      ),
+                      const SizedBox(
+                        height: 2,
                       ),
                       Row(
                         children: [
@@ -87,12 +102,17 @@ class ControlPanel extends StatelessWidget {
                             width: 5,
                           ),
                           ElegantNumberButton(
-                            initialValue: 10,
+                            color: Colors.purple,
+                            initialValue: c.volume.value,
                             minValue: 0,
                             maxValue: 10,
-                            step: 0.5,
+                            step: 1,
                             decimalPlaces: 1,
-                            onChanged: (value) {},
+                            buttonSizeHeight: 30,
+                            buttonSizeWidth: 50,
+                            onChanged: (value) {
+                              c.volume.value = value.toInt();
+                            },
                           ),
                         ],
                       ),

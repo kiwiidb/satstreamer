@@ -9,6 +9,7 @@ import 'package:satstreamer/models/connection.dart';
 import 'package:satstreamer/models/invoice.dart';
 import 'package:satstreamer/service/lndhub_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class LNDhubController extends GetxController {
@@ -26,6 +27,9 @@ class LNDhubController extends GetxController {
   var showMediaFromPayments = true.obs;
   var autoOpenLinks = true.obs;
   var textToSpeech = true.obs;
+  var volume = 5.obs;
+  var language = "en-US".obs;
+  var languages = <String>[].obs;
 
   @override
   void onInit() async {
@@ -33,6 +37,10 @@ class LNDhubController extends GetxController {
     var connection = fetchConnectionString();
     if (connection != null) {
       connectionStringController.text = connection["key"].toString();
+    }
+    var langs = await speaker.getLanguages;
+    for (String l in langs) {
+      languages.add(l);
     }
     super.onInit();
   }
@@ -46,7 +54,6 @@ class LNDhubController extends GetxController {
       'images/margot.gif',
       'images/octo.gif',
       'images/rich.gif',
-      'images/spongebob.gif',
       'images/vince.gif',
     ];
     final _random = new Random();
@@ -101,8 +108,17 @@ class LNDhubController extends GetxController {
       paymentHistory.add(payload);
       String description = payload.invoice!.description!;
       Get.snackbar("New payment", description.toString());
-      speaker.setLanguage("en-US");
+      if (!textToSpeech.value) {
+        return;
+      }
+      speaker.setVolume(volume.value / 10);
+      speaker.setLanguage(language.value);
       speaker.speak(description.toString());
+      if (autoOpenLinks.value &&
+          description.toString().startsWith("https://") &&
+          !description.toString().isImageFileName) {
+        launch(description.toString());
+      }
     });
     //addMockpayment();
   }
