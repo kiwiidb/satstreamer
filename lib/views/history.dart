@@ -36,7 +36,8 @@ class HistoryView extends StatelessWidget {
                 primary: false,
                 itemCount: controller.paymentHistory.length,
                 itemBuilder: (context, index) {
-                  var item = controller.paymentHistory[index];
+                  var item = controller.paymentHistory[
+                      controller.paymentHistory.length - 1 - index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
