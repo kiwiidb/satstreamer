@@ -32,7 +32,8 @@ class ControlPanel extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Text("Show media from image links in payment"),
+                          const Text(
+                              "Show media from .jpg/.png/.gif links in payment"),
                           const SizedBox(
                             width: 5,
                           ),
