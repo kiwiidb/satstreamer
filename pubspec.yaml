@@ -41,6 +41,7 @@ dependencies:
   localstorage: ^4.0.0+1
   url_launcher: ^6.0.20
   font_awesome_flutter: ^10.1.0
+  flutter_elegant_number_button: ^0.0.6
 
 dev_dependencies:
   flutter_test:

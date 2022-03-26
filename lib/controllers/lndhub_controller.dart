@@ -23,6 +23,9 @@ class LNDhubController extends GetxController {
   var lastPayment = InvoiceEvent().obs;
   var paymentHistory = <InvoiceEvent>[].obs;
   var receivedPayment = false.obs;
+  var showMediaFromPayments = true.obs;
+  var autoOpenLinks = true.obs;
+  var textToSpeech = true.obs;
 
   @override
   void onInit() async {

@@ -19,6 +19,7 @@ class NewPaymentView extends StatelessWidget {
           var payment = c.lastPayment.value.invoice!;
           var msg = payment.description!;
           return Container(
+            width: 400,
             decoration: BoxDecoration(
                 border: Border.all(), borderRadius: BorderRadius.circular(30)),
             child: Column(
