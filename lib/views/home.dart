@@ -18,22 +18,24 @@ class Home extends StatelessWidget {
       const StreamView(),
     ];
     return Scaffold(
-      body: Center(
-          child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              "Sat Streamer",
-              style: TextStyle(
-                  fontSize: 72.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple),
+      body: SingleChildScrollView(
+        child: Center(
+            child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Sat Streamer",
+                style: TextStyle(
+                    fontSize: 72.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.purple),
+              ),
             ),
-          ),
-          Obx(() => widgets[c.currentTabIndex.value])
-        ],
-      )),
+            Obx(() => widgets[c.currentTabIndex.value])
+          ],
+        )),
+      ),
       bottomNavigationBar: BottomAppBar(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
