@@ -43,6 +43,7 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   flutter_elegant_number_button: ^0.0.6
   qr_flutter: ^4.0.0
+  camera: ^0.9.4+17
   bech32: ^0.2.1
 
 

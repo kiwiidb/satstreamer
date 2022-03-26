@@ -42,6 +42,11 @@ class ControlPanel extends StatelessWidget {
                               activeColor: Colors.purple,
                               onChanged: (bool? value) {
                                 c.showWebCam.value = value!;
+                                if (value) {
+                                  c.initCamera();
+                                  return;
+                                }
+                                c.disableCamera();
                                 return;
                               }),
                         ],

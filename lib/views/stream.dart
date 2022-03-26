@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:satstreamer/views/webcam.dart';
 
 import '../controllers/lndhub_controller.dart';
 import 'control_panel.dart';
@@ -30,19 +31,27 @@ class StreamView extends StatelessWidget {
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            SizedBox(
+          children: [
+            const SizedBox(
               width: 200,
             ),
-            HistoryView(),
-            SizedBox(
+            Column(
+              children: const [
+                HistoryView(),
+                SizedBox(
+                  height: 30,
+                ),
+                WebcamView(),
+              ],
+            ),
+            const SizedBox(
               width: 100,
             ),
-            NewPaymentView(),
-            SizedBox(
+            const NewPaymentView(),
+            const SizedBox(
               width: 100,
             ),
-            ControlPanel(),
+            const ControlPanel(),
           ],
         ),
       ],

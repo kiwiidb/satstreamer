@@ -23,7 +23,7 @@ class HistoryView extends StatelessWidget {
           height: 5,
         ),
         SizedBox(
-          height: 600,
+          height: 350,
           width: 400,
           child: Container(
             decoration: BoxDecoration(

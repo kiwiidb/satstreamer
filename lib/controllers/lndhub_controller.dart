@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:bech32/bech32.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
@@ -34,6 +35,8 @@ class LNDhubController extends GetxController {
   var languages = <String>[].obs;
   final TextEditingController lnAddressController = TextEditingController();
   var lnurl = "".obs;
+  late CameraController cameraController;
+  var cameraInitialized = false.obs;
 
   @override
   void onInit() async {
@@ -49,6 +52,18 @@ class LNDhubController extends GetxController {
     lnAddressController.text = "you@example.com";
     setLNURL();
     super.onInit();
+  }
+
+  void initCamera() async {
+    var cameras = await availableCameras();
+    cameraController = CameraController(cameras[0], ResolutionPreset.max);
+    await cameraController.initialize();
+    cameraInitialized.value = true;
+  }
+
+  void disableCamera() async {
+    cameraInitialized.value = false;
+    await cameraController.dispose();
   }
 
   String getRandomGif() {
