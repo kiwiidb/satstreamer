@@ -18,14 +18,14 @@ class ConnectLNDHub extends StatelessWidget {
           style: const TextStyle(color: Colors.purple),
           decoration: const InputDecoration(
             hintText: 'lndhub://username:password@https://example.com',
-            hintStyle: TextStyle(color: Colors.deepPurple),
+            hintStyle: TextStyle(color: Colors.purple),
             labelText: "LNDhub connection string",
-            labelStyle: TextStyle(color: Colors.deepPurple),
+            labelStyle: TextStyle(color: Colors.purple),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepPurple),
+                borderSide: BorderSide(color: Colors.purple),
                 borderRadius: BorderRadius.all(Radius.circular(30.0))),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepPurple),
+                borderSide: BorderSide(color: Colors.purple),
                 borderRadius: BorderRadius.all(Radius.circular(30.0))),
           ),
         ),

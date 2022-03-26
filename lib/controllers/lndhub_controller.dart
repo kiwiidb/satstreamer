@@ -101,6 +101,10 @@ class LNDhubController extends GetxController {
       speaker.setLanguage("en-US");
       speaker.speak(description.toString());
     });
+    //addMockpayment();
+  }
+
+  void addMockPayment() {
     //debugging
     receivedPayment.value = true;
     var mock = InvoiceEvent(

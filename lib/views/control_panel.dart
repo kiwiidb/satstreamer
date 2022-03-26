@@ -13,6 +13,19 @@ class ControlPanel extends StatelessWidget {
             border: Border.all(),
             borderRadius: BorderRadius.circular(10),
           ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text("Show media from image links in payment"),
+                  (Text("Auto-open links from payment")),
+                  (Text("Text to speech")),
+                  (Text("Voice language")),
+                  (Text("Voice volume")),
+                ]),
+          ),
         ));
   }
 }

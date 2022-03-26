@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
               style: TextStyle(
                   fontSize: 72.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple),
+                  color: Colors.purple),
             ),
           ),
           Obx(() => widgets[c.currentTabIndex.value])
@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
                   {launch("https://github.com/kiwiidb/satstreamer")},
               icon: const FaIcon(
                 FontAwesomeIcons.github,
-                color: Colors.deepPurple,
+                color: Colors.purple,
               ),
             ),
             TextButton(
@@ -57,7 +57,7 @@ class Home extends StatelessWidget {
               onPressed: () => {launch("https://twitter.com/getalby")},
               icon: const FaIcon(
                 FontAwesomeIcons.twitter,
-                color: Colors.deepPurple,
+                color: Colors.purple,
               ),
             ),
             TextButton(

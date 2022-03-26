@@ -39,6 +39,9 @@ class StreamView extends StatelessWidget {
               width: 100,
             ),
             NewPaymentView(),
+            SizedBox(
+              width: 100,
+            ),
             ControlPanel(),
           ],
         ),
