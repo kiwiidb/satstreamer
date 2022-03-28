@@ -24,10 +24,12 @@ class LNDhubController extends GetxController {
   var host = "".obs;
   late WebSocketChannel channel;
   var lastPayment = InvoiceEvent().obs;
+  var highestPayment = InvoiceEvent().obs;
   var paymentHistory = <InvoiceEvent>[].obs;
   var receivedPayment = false.obs;
   var showMediaFromPayments = true.obs;
   var showWebCam = false.obs;
+  var showHighest = false.obs;
   var autoOpenLinks = true.obs;
   var textToSpeech = true.obs;
   var volume = 5.obs;
@@ -143,6 +145,7 @@ class LNDhubController extends GetxController {
       lastPayment.value = payload;
       receivedPayment.value = true;
       paymentHistory.add(payload);
+      getHighestPayment();
       String description = payload.invoice!.description!;
       Get.snackbar("New payment", description.toString());
       if (!textToSpeech.value) {
@@ -158,6 +161,18 @@ class LNDhubController extends GetxController {
       }
     });
     //addMockpayment();
+  }
+
+  void getHighestPayment() {
+    if (paymentHistory.isEmpty) {
+      return;
+    }
+    highestPayment.value = paymentHistory[0];
+    for (InvoiceEvent p in paymentHistory) {
+      if (p.invoice!.amt! > highestPayment.value.invoice!.amt!) {
+        highestPayment.value = p;
+      }
+    }
   }
 
   void addMockPayment() {

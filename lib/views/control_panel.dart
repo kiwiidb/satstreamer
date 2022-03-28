@@ -53,6 +53,20 @@ class ControlPanel extends StatelessWidget {
                       ),
                       Row(
                         children: [
+                          const Text("Show highest donation instead of latest"),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Checkbox(
+                              value: c.showWebCam.value,
+                              activeColor: Colors.purple,
+                              onChanged: (bool? value) {
+                                c.showHighest.value = value!;
+                              }),
+                        ],
+                      ),
+                      Row(
+                        children: [
                           const Text(
                               "Show media from .jpg/.png/.gif links in payment"),
                           const SizedBox(

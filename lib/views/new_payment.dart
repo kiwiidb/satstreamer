@@ -17,6 +17,9 @@ class NewPaymentView extends StatelessWidget {
           return const Text("Waiting for payment...");
         } else {
           var payment = c.lastPayment.value.invoice!;
+          if (c.showHighest.value) {
+            payment = c.highestPayment.value.invoice!;
+          }
           var msg = payment.description!;
           var img = Image.asset(
             c.getRandomGif(),
