@@ -58,7 +58,7 @@ class ControlPanel extends StatelessWidget {
                             width: 5,
                           ),
                           Checkbox(
-                              value: c.showWebCam.value,
+                              value: c.showHighest.value,
                               activeColor: Colors.purple,
                               onChanged: (bool? value) {
                                 c.showHighest.value = value!;
