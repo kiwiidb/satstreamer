@@ -10,16 +10,16 @@ class WebcamView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LNDhubController c = Get.put(LNDhubController());
+    double totalWidth = MediaQuery.of(context).size.width;
+    double totalHeight = MediaQuery.of(context).size.height - 60;
     return SizedBox(
-        height: 300,
-        width: 400,
+        width: totalWidth / 3,
+        height: totalHeight / 2,
         child: Obx((() {
           if (!c.cameraInitialized.value) {
             return Container();
           }
-          return ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: CameraPreview(c.cameraController));
+          return CameraPreview(c.cameraController);
         })));
   }
 }

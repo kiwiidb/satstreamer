@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:satstreamer/views/ln_address.dart';
 import 'package:satstreamer/views/webcam.dart';
 
 import '../controllers/lndhub_controller.dart';
@@ -14,47 +15,20 @@ class StreamView extends StatelessWidget {
   Widget build(BuildContext context) {
     final LNDhubController c = Get.put(LNDhubController());
     var host = c.host;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Connected to $host"),
-            const SizedBox(
-              width: 10,
-            ),
-            ElevatedButton(
-                onPressed: c.disconnect, child: const Text("Disconnect")),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              width: 200,
-            ),
-            Column(
-              children: const [
-                HistoryView(),
-                SizedBox(
-                  height: 30,
-                ),
-                WebcamView(),
-              ],
-            ),
-            const SizedBox(
-              width: 100,
-            ),
-            const NewPaymentView(),
-            const SizedBox(
-              width: 100,
-            ),
-            const ControlPanel(),
-          ],
-        ),
-      ],
-    );
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: const [ControlPanel(), WebcamView()],
+          ),
+          Column(
+            children: const [
+              NewPaymentView(),
+              AddressView(),
+            ],
+          ),
+          const HistoryView()
+        ]);
   }
 }

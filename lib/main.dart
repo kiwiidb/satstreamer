@@ -10,7 +10,6 @@ void main() {
     theme: ThemeData(
       // Define the default brightness and colors.
       brightness: Brightness.light,
-      backgroundColor: Colors.purple[600],
 
       // Define the default font family.
       fontFamily: 'Georgia',

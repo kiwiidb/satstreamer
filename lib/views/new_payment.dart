@@ -9,12 +9,18 @@ class NewPaymentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LNDhubController c = Get.put(LNDhubController());
+    double totalWidth = MediaQuery.of(context).size.width;
+    double totalHeight = MediaQuery.of(context).size.height - 60;
     return SizedBox(
-      height: 500,
-      width: 500,
+      width: totalWidth / 3,
+      height: totalHeight / 2,
       child: Obx((() {
         if (!c.receivedPayment.value) {
-          return const Text("Waiting for payment...");
+          return const Center(
+              child: Text(
+            "Waiting for payment...",
+            textAlign: TextAlign.center,
+          ));
         } else {
           var payment = c.lastPayment.value.invoice!;
           if (c.showHighest.value) {
@@ -32,79 +38,74 @@ class NewPaymentView extends StatelessWidget {
               width: 300,
             );
           }
-          return Container(
-            width: 400,
-            decoration: BoxDecoration(
-                border: Border.all(), borderRadius: BorderRadius.circular(30)),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: const [
-                          SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            "Latest contribution: ",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        payment.amt.toString(),
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.orange[700],
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Column(
-                        children: [
-                          const SizedBox(
-                            height: 3,
-                          ),
-                          Text(
-                            " sat",
-                            style: TextStyle(
-                                fontSize: 18, color: Colors.orange[700]),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: SelectableText(
-                          msg,
-                          style: const TextStyle(fontSize: 20),
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: const [
+                        SizedBox(
+                          height: 2,
                         ),
-                      )),
+                        Text(
+                          "Latest contribution: ",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      payment.amt.toString(),
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.orange[700],
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          " sat",
+                          style: TextStyle(
+                              fontSize: 18, color: Colors.orange[700]),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: img,
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: SelectableText(
+                        msg,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: img,
+              ),
+            ],
           );
         }
       })),

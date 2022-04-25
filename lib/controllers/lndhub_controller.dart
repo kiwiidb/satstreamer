@@ -27,10 +27,10 @@ class LNDhubController extends GetxController {
   var highestPayment = InvoiceEvent().obs;
   var paymentHistory = <InvoiceEvent>[].obs;
   var receivedPayment = false.obs;
-  var showMediaFromPayments = true.obs;
+  var showMediaFromPayments = false.obs;
   var showWebCam = false.obs;
   var showHighest = false.obs;
-  var autoOpenLinks = true.obs;
+  var autoOpenLinks = false.obs;
   var textToSpeech = true.obs;
   var volume = 5.obs;
   var language = "en-US".obs;
@@ -51,7 +51,7 @@ class LNDhubController extends GetxController {
     for (String l in langs) {
       languages.add(l);
     }
-    lnAddressController.text = "you@example.com";
+    lnAddressController.text = "you@getalby.com";
     setLNURL();
     super.onInit();
   }
