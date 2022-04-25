@@ -103,9 +103,12 @@ class NewPaymentView extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: img,
+              SizedBox(
+                height: totalHeight * 0.25,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: img,
+                ),
               ),
             ],
           );
