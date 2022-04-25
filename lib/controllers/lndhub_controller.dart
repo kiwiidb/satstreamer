@@ -71,7 +71,6 @@ class LNDhubController extends GetxController {
   String getRandomGif() {
     var gifs = [
       'images/baby.gif',
-      'images/leo-laser.gif',
       'images/leo.gif',
       'images/lightning.gif',
       'images/margot.gif',
