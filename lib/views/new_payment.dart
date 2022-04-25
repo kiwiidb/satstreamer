@@ -41,7 +41,7 @@ class NewPaymentView extends StatelessWidget {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -82,7 +82,7 @@ class NewPaymentView extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 3,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
