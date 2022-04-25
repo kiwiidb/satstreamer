@@ -12,10 +12,10 @@ class AddressView extends StatelessWidget {
     final LNDhubController c = Get.put(LNDhubController());
 
     double totalWidth = MediaQuery.of(context).size.width;
-    double totalHeight = MediaQuery.of(context).size.height - 60;
+    double totalHeight = MediaQuery.of(context).size.height - 80;
     return SizedBox(
       width: totalWidth / 3,
-      height: totalHeight / 2,
+      height: totalHeight * 0.4,
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.all(8.0),

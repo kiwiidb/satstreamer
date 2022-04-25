@@ -13,7 +13,7 @@ class NewPaymentView extends StatelessWidget {
     double totalHeight = MediaQuery.of(context).size.height - 60;
     return SizedBox(
       width: totalWidth / 3,
-      height: totalHeight / 2,
+      height: totalHeight * 0.6,
       child: Obx((() {
         if (!c.receivedPayment.value) {
           return const Center(
@@ -41,7 +41,7 @@ class NewPaymentView extends StatelessWidget {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(3.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -87,6 +87,8 @@ class NewPaymentView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
+                    height: totalHeight * 0.25,
+                    width: totalWidth * 0.2,
                     decoration: BoxDecoration(
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(20)),
@@ -99,7 +101,7 @@ class NewPaymentView extends StatelessWidget {
                     )),
               ),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),

@@ -32,7 +32,7 @@ class LNDhubController extends GetxController {
   var showHighest = false.obs;
   var autoOpenLinks = false.obs;
   var textToSpeech = true.obs;
-  var volume = 5.obs;
+  var volume = 10.obs;
   var language = "en-US".obs;
   var languages = <String>[].obs;
   final TextEditingController lnAddressController = TextEditingController();
