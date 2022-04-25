@@ -107,18 +107,6 @@ class ControlPanel extends StatelessWidget {
               Row(
                 children: [
                   Checkbox(
-                      value: c.showMediaFromPayments.value,
-                      activeColor: Colors.purple,
-                      onChanged: (bool? value) {
-                        c.showMediaFromPayments.value = value!;
-                        return;
-                      }),
-                  const Text("Show media from .jpg/.png/.gif links in payment"),
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
                       activeColor: Colors.purple,
                       value: c.autoOpenLinks.value,
                       onChanged: (bool? value) {

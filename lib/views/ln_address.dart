@@ -14,23 +14,20 @@ class AddressView extends StatelessWidget {
     double totalWidth = MediaQuery.of(context).size.width;
     double totalHeight = MediaQuery.of(context).size.height - 80;
     return SizedBox(
-      width: totalWidth / 3,
-      height: totalHeight * 0.4,
+      width: totalWidth * 0.15,
+      height: totalHeight / 2,
       child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            controller: c.lnAddressController,
-            onChanged: (String? value) {
-              c.setLNURL();
-            },
-            style: const TextStyle(color: Colors.purple, fontSize: 23),
-            textAlign: TextAlign.center,
-            decoration: const InputDecoration(
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                disabledBorder: InputBorder.none),
-          ),
+        TextFormField(
+          controller: c.lnAddressController,
+          onChanged: (String? value) {
+            c.setLNURL();
+          },
+          style: const TextStyle(color: Colors.purple, fontSize: 23),
+          textAlign: TextAlign.center,
+          decoration: const InputDecoration(
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              disabledBorder: InputBorder.none),
         ),
         Center(
           child: Padding(
@@ -38,7 +35,7 @@ class AddressView extends StatelessWidget {
             child: Obx(
               () => QrImage(
                 data: c.lnurl.value,
-                size: 200.0,
+                size: totalHeight * 0.25,
               ),
             ),
           ),

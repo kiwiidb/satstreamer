@@ -22,12 +22,7 @@ class StreamView extends StatelessWidget {
           Column(
             children: const [ControlPanel(), WebcamView()],
           ),
-          Column(
-            children: const [
-              NewPaymentView(),
-              AddressView(),
-            ],
-          ),
+          const NewPaymentView(),
           const HistoryView()
         ]);
   }

@@ -46,20 +46,22 @@ class HistoryView extends StatelessWidget {
                           Row(children: [
                             Text(
                               item.invoice!.amt.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 25,
-                                  color: Colors.orange[700],
+                                  color: Colors.purple,
                                   fontWeight: FontWeight.bold),
                             ),
                             Column(
-                              children: [
-                                const SizedBox(
+                              children: const [
+                                SizedBox(
                                   height: 3,
                                 ),
                                 Text(
                                   " sat",
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.orange[700]),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.purple),
                                 ),
                               ],
                             )
