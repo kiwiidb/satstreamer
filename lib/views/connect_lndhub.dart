@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:marquee/marquee.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/lndhub_controller.dart';
@@ -64,7 +65,7 @@ class ConnectLNDHub extends StatelessWidget {
               onPressed: () => {launch("https://youtu.be/zAY8od3Z_LA?t=6015")},
               child: const Text("Demo")),
         ],
-      )
+      ),
     ]);
   }
 }

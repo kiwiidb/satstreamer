@@ -45,6 +45,8 @@ dependencies:
   qr_flutter: ^4.0.0
   camera: ^0.9.4+17
   bech32: ^0.2.1
+  marquee: ^2.2.1
+  google_fonts: ^2.3.2
 
 
 dev_dependencies:
