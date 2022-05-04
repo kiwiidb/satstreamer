@@ -12,6 +12,7 @@ Interact with the audience of your livestream through Lightning donations.
 - Go to https://getalby.com/node and copy the LNDhub connection string.
 - Paste the LNDhub connection string into the box at https://satstreamer.app. Also fill in your Alby Lightning Address.
 - Click "Stream" to start streaming.
+- Give access to your webcam.
 - All incoming payments should show up on this page.
 
 ## Regtest setup
