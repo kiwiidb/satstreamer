@@ -128,11 +128,28 @@ class ControlPanel extends StatelessWidget {
                     Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          controller: c.lnAddressController,
+                          style: const TextStyle(color: Colors.purple),
+                          decoration: const InputDecoration(
+                            hintStyle: TextStyle(color: Colors.purple),
+                            labelText: "Lightning Address",
+                            labelStyle: TextStyle(color: Colors.purple),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple),
+                            ),
+                          ),
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                           controller: c.placeholderText,
                           onChanged: (String value) {
-                            c.placeholderText.text = value;
+                            c.placeholder.value = value;
                           },
                           style: const TextStyle(color: Colors.purple),
                           decoration: const InputDecoration(

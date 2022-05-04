@@ -27,17 +27,27 @@ class WebcamView extends StatelessWidget {
             }
             return CameraPreview(c.cameraController);
           }))),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextButton(
-            onPressed: () {
-              Get.defaultDialog(
-                  title: "Settings", content: const ControlPanel());
-            },
-            child: const Icon(
-              Icons.settings,
-              size: 40,
-            )),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              height: 50,
+              width: 50,
+              color: Colors.red,
+              child: Text(c.lnAddressController.text)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+                onPressed: () {
+                  Get.defaultDialog(
+                      title: "Settings", content: const ControlPanel());
+                },
+                child: const Icon(
+                  Icons.settings,
+                  size: 40,
+                )),
+          ),
+        ],
       )
     ]);
   }

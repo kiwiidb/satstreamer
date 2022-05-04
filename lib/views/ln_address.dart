@@ -26,17 +26,6 @@ class AddressView extends StatelessWidget {
               enabledBorder: InputBorder.none,
               disabledBorder: InputBorder.none),
         ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Obx(
-              () => QrImage(
-                data: c.lnurl.value,
-                size: totalHeight * 0.25,
-              ),
-            ),
-          ),
-        ),
       ]),
     );
   }

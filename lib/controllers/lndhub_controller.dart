@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -36,9 +37,11 @@ class LNDhubController extends GetxController {
   var language = "en-US".obs;
   var languages = <String>[].obs;
   final TextEditingController placeholderText = TextEditingController();
-  var lnurl = "".obs;
+  final TextEditingController lnAddressController = TextEditingController();
+  var placeholder = "donate at you@getalby.com".obs;
   late CameraController cameraController;
   var cameraInitialized = false.obs;
+  var showDefaultMsg = false.obs;
 
   @override
   void onInit() async {
@@ -47,11 +50,18 @@ class LNDhubController extends GetxController {
     if (connection != null) {
       connectionStringController.text = connection["key"].toString();
     }
+    var lightningAddress = fetchLNAddress();
+    if (lightningAddress != null) {
+      lnAddressController.text = lightningAddress["key"].toString();
+    }
     var langs = await speaker.getLanguages;
     for (String l in langs) {
       languages.add(l);
     }
-    placeholderText.text = "donate at you@getalby.com";
+    Timer.periodic(const Duration(seconds: 10), (Timer timer) {
+      showDefaultMsg.value = true;
+    });
+    placeholderText.text = placeholder.value;
     super.onInit();
   }
 
@@ -77,7 +87,7 @@ class LNDhubController extends GetxController {
       'images/rich.gif',
       'images/vince.gif',
     ];
-    final _random = new Random();
+    final _random = Random();
     return gifs[_random.nextInt(gifs.length)];
   }
 
@@ -88,6 +98,14 @@ class LNDhubController extends GetxController {
 
   dynamic fetchConnectionString() {
     return lndhubStorage.getItem("connectionstring");
+  }
+
+  Future<void> setLNAddress() async {
+    await lndhubStorage.setItem("lnaddress", {"key": lnAddressController.text});
+  }
+
+  dynamic fetchLNAddress() {
+    return lndhubStorage.getItem("lnaddress");
   }
 
   void disconnect() async {
