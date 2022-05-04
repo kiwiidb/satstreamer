@@ -91,7 +91,7 @@ class ConnectLNDHub extends StatelessWidget {
           TextButton(
               onPressed: () => {
                     launch(
-                        "https://github.com/kiwiidb/satstreamer/blob/main/README.md#regtest-setup")
+                        "https://github.com/kiwiidb/satstreamer/blob/main/README.md#Getting-started")
                   },
               child: const Text("Instructions")),
           TextButton(

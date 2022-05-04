@@ -9,11 +9,10 @@ Interact with the audience of your livestream through Lightning donations.
 - I am using [Streamlabs](https://streamlabs.com) to overlay this web app on a livestream.
 
 ## Getting started
-- A [fork](https://github.com/getAlby/lndhub.go/pull/135) of LNDhub.go is currently needed for this functionality.
-- You also need Lightning Address endpoints that are compatible with the latest version of LNDhub.go.
-With [Easy LN Address](https://github.com/kiwiidb/easy-ln-address), you can have a Lightning Address on your own domain (you@yourdomain.com)
-that is powered by a LNDhub.go server like https://ln.getalby.com.
-- Import your LNDhub.go connection string to start streaming incoming payments.
+- Go to https://getalby.com/node and copy the LNDhub connection string.
+- Paste the LNDhub connection string into the box at https://satstreamer.app. Also fill in your Alby Lightning Address.
+- Click "Stream" to start streaming.
+- All incoming payments should show up on this page.
 
 ## Regtest setup
 You can use Alby's regtest environment to test out payments.
