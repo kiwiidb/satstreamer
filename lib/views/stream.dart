@@ -7,8 +7,9 @@ class StreamView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: const [WebcamView(), MessageBanner()],
-    );
+    return Column(children: const [
+      MessageBanner(),
+      WebcamView(),
+    ]);
   }
 }

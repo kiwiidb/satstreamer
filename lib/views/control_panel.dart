@@ -25,151 +25,130 @@ class ControlPanel extends StatelessWidget {
           var host = c.host;
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 32),
-            child: Column(children: [
-              Row(
-                children: [
-                  Text("Connected to $host"),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  TextButton(
-                      onPressed: c.disconnect, child: const Text("Disconnect")),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text("Voice language: "),
-                  const SizedBox(width: 5),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                        isDense: true,
-                        elevation: 0,
-                        value: c.language.value,
-                        items: items,
-                        onChanged: (dynamic item) async {
-                          c.language.value = item;
-                        }),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Row(
-                children: [
-                  const Text("Voice volume"),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  ElegantNumberButton(
-                    color: Colors.transparent,
-                    initialValue: c.volume.value,
-                    minValue: 0,
-                    maxValue: 10,
-                    step: 1,
-                    decimalPlaces: 1,
-                    buttonSizeHeight: 30,
-                    buttonSizeWidth: 50,
-                    onChanged: (value) {
-                      c.volume.value = value.toInt();
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                      value: c.showWebCam.value,
-                      activeColor: Colors.purple,
-                      onChanged: (bool? value) {
-                        c.showWebCam.value = value!;
-                        if (value) {
-                          c.initCamera();
-                          return;
-                        }
-                        c.disableCamera();
-                        return;
-                      }),
-                  const Text("Show webcam"),
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                      value: c.showHighest.value,
-                      activeColor: Colors.purple,
-                      onChanged: (bool? value) {
-                        c.showHighest.value = value!;
-                      }),
-                  const Text("Show highest donation instead of latest"),
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                      activeColor: Colors.purple,
-                      value: c.autoOpenLinks.value,
-                      onChanged: (bool? value) {
-                        c.autoOpenLinks.value = value!;
-                        return;
-                      }),
-                  const Text("Auto-open links from payment"),
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                      activeColor: Colors.purple,
-                      value: c.textToSpeech.value,
-                      onChanged: (bool? value) async {
-                        c.textToSpeech.value = value!;
-                        return;
-                      }),
-                  const Text("Text to speech"),
-                ],
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-
-              const SizedBox(
-                height: 10,
-              ),
-              //Padding(
-              //  padding: const EdgeInsets.all(8.0),
-              //  child: TextFormField(
-              //    controller: c.lnAddressController,
-              //    onChanged: (String? value) {
-              //      c.setLNURL();
-              //    },
-              //    style: const TextStyle(color: Colors.purple),
-              //    decoration: const InputDecoration(
-              //      hintStyle: TextStyle(color: Colors.purple),
-              //      labelText: "LN Address",
-              //      labelStyle: TextStyle(color: Colors.purple),
-              //      focusedBorder: OutlineInputBorder(
-              //          borderSide: BorderSide(color: Colors.purple),
-              //          borderRadius:
-              //              BorderRadius.all(Radius.circular(30.0))),
-              //      enabledBorder: OutlineInputBorder(
-              //          borderSide: BorderSide(color: Colors.purple),
-              //          borderRadius:
-              //              BorderRadius.all(Radius.circular(30.0))),
-              //    ),
-              //  ),
-              //),
-              //Center(
-              //  child: Padding(
-              //    padding: const EdgeInsets.all(8.0),
-              //    child: Obx(
-              //      () => QrImage(
-              //        data: c.lnurl.value,
-              //        size: 200.0,
-              //      ),
-              //    ),
-              //  ),
-              //),
-            ]),
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                        width: 250,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Connected to: "),
+                            Text("$host"),
+                            TextButton(
+                                onPressed: c.disconnect,
+                                child: const Text("Disconnect")),
+                          ],
+                        )),
+                    Row(
+                      children: [
+                        const Text("Voice language: "),
+                        const SizedBox(width: 5),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                              isDense: true,
+                              elevation: 0,
+                              value: c.language.value,
+                              items: items,
+                              onChanged: (dynamic item) async {
+                                c.language.value = item;
+                              }),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Row(
+                      children: [
+                        const Text("Voice volume"),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        ElegantNumberButton(
+                          color: Colors.transparent,
+                          initialValue: c.volume.value,
+                          minValue: 0,
+                          maxValue: 10,
+                          step: 1,
+                          decimalPlaces: 1,
+                          buttonSizeHeight: 30,
+                          buttonSizeWidth: 50,
+                          onChanged: (value) {
+                            c.volume.value = value.toInt();
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                            value: c.showWebCam.value,
+                            activeColor: Colors.purple,
+                            onChanged: (bool? value) {
+                              c.showWebCam.value = value!;
+                              if (value) {
+                                c.initCamera();
+                                return;
+                              }
+                              c.disableCamera();
+                              return;
+                            }),
+                        const Text("Show webcam"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                            activeColor: Colors.purple,
+                            value: c.autoOpenLinks.value,
+                            onChanged: (bool? value) {
+                              c.autoOpenLinks.value = value!;
+                              return;
+                            }),
+                        const Text("Auto-open links from payment"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                            activeColor: Colors.purple,
+                            value: c.textToSpeech.value,
+                            onChanged: (bool? value) async {
+                              c.textToSpeech.value = value!;
+                              return;
+                            }),
+                        const Text("Text to speech"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          controller: c.placeholderText,
+                          onChanged: (String value) {
+                            c.placeholderText.text = value;
+                          },
+                          style: const TextStyle(color: Colors.purple),
+                          decoration: const InputDecoration(
+                            hintStyle: TextStyle(color: Colors.purple),
+                            labelText: "Placeholder text",
+                            labelStyle: TextStyle(color: Colors.purple),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple),
+                            ),
+                          ),
+                        )),
+                  ]),
+            ),
           );
         }));
   }

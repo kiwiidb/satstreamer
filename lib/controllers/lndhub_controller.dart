@@ -35,7 +35,7 @@ class LNDhubController extends GetxController {
   var volume = 10.obs;
   var language = "en-US".obs;
   var languages = <String>[].obs;
-  final TextEditingController lnAddressController = TextEditingController();
+  final TextEditingController placeholderText = TextEditingController();
   var lnurl = "".obs;
   late CameraController cameraController;
   var cameraInitialized = false.obs;
@@ -51,8 +51,7 @@ class LNDhubController extends GetxController {
     for (String l in langs) {
       languages.add(l);
     }
-    lnAddressController.text = "you@getalby.com";
-    setLNURL();
+    placeholderText.text = "donate at you@getalby.com";
     super.onInit();
   }
 
@@ -96,22 +95,6 @@ class LNDhubController extends GetxController {
     hc.setTab(0);
   }
 
-  void setLNURL() {
-    Bech32Codec codec = const Bech32Codec();
-    var parts = lnAddressController.text.split("@");
-    if (parts.length != 2) {
-      return;
-    }
-    var host = parts[1];
-    var user = parts[0];
-    var input = "https://$host/.well-known/lnurlp/$user";
-    var inputBytes = utf8.encode(input);
-    var convertedBytes = convertBech32(inputBytes);
-    var result =
-        codec.encode(Bech32("lnurl", convertedBytes), 200).toUpperCase();
-    lnurl.value = result;
-  }
-
   void fetchTokenAndStartStream() async {
     var connection = parseConnectionString(connectionStringController.text);
     if (connection == null ||
@@ -146,7 +129,6 @@ class LNDhubController extends GetxController {
       paymentHistory.add(payload);
       getHighestPayment();
       String description = payload.invoice!.description!;
-      Get.snackbar("New payment", description.toString());
       if (!textToSpeech.value) {
         return;
       }

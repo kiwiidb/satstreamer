@@ -13,19 +13,23 @@ class MessageBanner extends StatelessWidget {
     double totalWidth = MediaQuery.of(context).size.width;
     double totalHeight = MediaQuery.of(context).size.height - 60;
     return GetX<LNDhubController>(builder: (c) {
-      var msg = "Waiting for payment...";
+      var msg = c.placeholderText.text;
       if (c.receivedPayment.value) {
         var payment = c.lastPayment.value.invoice!;
         msg = payment.description!;
       }
       return Container(
-        color: Colors.purple,
+        color: Colors.white,
         child: SizedBox(
             width: totalWidth,
             height: 0.1 * totalHeight,
             child: Marquee(
-              style: GoogleFonts.openSans(
-                  textStyle: const TextStyle(fontSize: 60)),
+              blankSpace: 20,
+              startPadding: 20,
+              velocity: 35,
+              style: GoogleFonts.roboto(
+                  textStyle:
+                      const TextStyle(fontSize: 60, color: Colors.purple)),
               text: msg,
             )),
       );

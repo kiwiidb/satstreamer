@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:marquee/marquee.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,20 +11,26 @@ class ConnectLNDHub extends StatelessWidget {
   Widget build(context) {
     final LNDhubController c = Get.put(LNDhubController());
     return Column(children: [
-      const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text(
-          "SAT STREAMER",
-          style: TextStyle(
-              fontSize: 72.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.purple),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: 200,
+          width: 500,
+          child: Marquee(
+            blankSpace: 20,
+            startPadding: 20,
+            velocity: 20,
+            style: GoogleFonts.roboto(
+                textStyle: const TextStyle(fontSize: 100),
+                color: Colors.purple),
+            text: "sat streamer",
+          ),
         ),
       ),
       const SizedBox(
         height: 30,
       ),
-      Container(
+      SizedBox(
         width: 500,
         child: TextFormField(
           controller: c.connectionStringController,

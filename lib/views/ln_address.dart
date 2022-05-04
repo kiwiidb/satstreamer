@@ -18,10 +18,7 @@ class AddressView extends StatelessWidget {
       height: totalHeight / 2,
       child: Column(children: [
         TextFormField(
-          controller: c.lnAddressController,
-          onChanged: (String? value) {
-            c.setLNURL();
-          },
+          controller: c.placeholderText,
           style: const TextStyle(color: Colors.purple, fontSize: 23),
           textAlign: TextAlign.center,
           decoration: const InputDecoration(
