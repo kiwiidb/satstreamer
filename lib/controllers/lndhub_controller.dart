@@ -38,7 +38,8 @@ class LNDhubController extends GetxController {
   var languages = <String>[].obs;
   final TextEditingController placeholderText = TextEditingController();
   final TextEditingController lnAddressController = TextEditingController();
-  var placeholder = "donate at you@getalby.com".obs;
+  var lnAddress = "you@getalby.com".obs;
+  var placeholder = "Lightning donations: your message will show up here".obs;
   late CameraController cameraController;
   var cameraInitialized = false.obs;
   var showDefaultMsg = false.obs;
@@ -53,6 +54,7 @@ class LNDhubController extends GetxController {
     var lightningAddress = fetchLNAddress();
     if (lightningAddress != null) {
       lnAddressController.text = lightningAddress["key"].toString();
+      lnAddress.value = lightningAddress["key"].toString();
     }
     var langs = await speaker.getLanguages;
     for (String l in langs) {

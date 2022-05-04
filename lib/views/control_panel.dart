@@ -130,6 +130,10 @@ class ControlPanel extends StatelessWidget {
                         child: TextFormField(
                           controller: c.lnAddressController,
                           style: const TextStyle(color: Colors.purple),
+                          onChanged: (String value) {
+                            c.lnAddress.value = value;
+                            c.setLNAddress();
+                          },
                           decoration: const InputDecoration(
                             hintStyle: TextStyle(color: Colors.purple),
                             labelText: "Lightning Address",

@@ -51,6 +51,32 @@ class ConnectLNDHub extends StatelessWidget {
         ),
       ),
       const SizedBox(
+        height: 10,
+      ),
+      SizedBox(
+        width: 500,
+        child: TextFormField(
+          controller: c.lnAddressController,
+          style: const TextStyle(color: Colors.purple),
+          onChanged: (String value) {
+            c.lnAddress.value = value;
+            c.setLNAddress();
+          },
+          decoration: const InputDecoration(
+            hintStyle: TextStyle(color: Colors.purple),
+            labelText: "Lightning Address",
+            labelStyle: TextStyle(color: Colors.purple),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.purple),
+                borderRadius: BorderRadius.all(Radius.circular(30.0))),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: Colors.purple),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(
         height: 30,
       ),
       ElevatedButton(

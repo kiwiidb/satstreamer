@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:satstreamer/views/control_panel.dart';
 
 import '../controllers/lndhub_controller.dart';
@@ -30,11 +31,19 @@ class WebcamView extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-              height: 50,
-              width: 50,
-              color: Colors.red,
-              child: Text(c.lnAddressController.text)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GetX<LNDhubController>(builder: (c) {
+              return Text(
+                c.lnAddress.value,
+                style: GoogleFonts.roboto(
+                    textStyle: const TextStyle(
+                        fontSize: 40,
+                        color: Colors.purple,
+                        backgroundColor: Colors.white)),
+              );
+            }),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
