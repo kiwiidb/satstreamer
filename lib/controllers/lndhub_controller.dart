@@ -57,9 +57,7 @@ class LNDhubController extends GetxController {
       lnAddress.value = lightningAddress["key"].toString();
     }
     var langs = await speaker.getLanguages;
-    for (String l in langs) {
-      languages.add(l);
-    }
+    languages = RxList(langs);
     Timer.periodic(const Duration(seconds: 10), (Timer timer) {
       showDefaultMsg.value = true;
     });
