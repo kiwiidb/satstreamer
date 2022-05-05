@@ -39,7 +39,8 @@ class LNDhubController extends GetxController {
   final TextEditingController placeholderText = TextEditingController();
   final TextEditingController lnAddressController = TextEditingController();
   var lnAddress = "you@getalby.com".obs;
-  var placeholder = "Lightning donations: your message will show up here".obs;
+  var placeholder =
+      "⚡ 💸 Lightning donations: your message will show up here".obs;
   late CameraController cameraController;
   var cameraInitialized = false.obs;
   var showDefaultMsg = false.obs;
