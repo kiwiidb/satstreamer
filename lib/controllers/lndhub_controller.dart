@@ -14,6 +14,7 @@ import 'package:satstreamer/service/lndhub_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:oauth2/oauth2.dart' as oauth2;
 
 class LNDhubController extends GetxController {
   final HomeController hc = Get.put(HomeController());
@@ -45,6 +46,17 @@ class LNDhubController extends GetxController {
   var cameraInitialized = false.obs;
   var showDefaultMsg = false.obs;
 
+  //oauth
+  var redirectUrl = Uri.parse("http://localhost:8080");
+  var scopes = ["invoices:read", "account:read"];
+  var grant = oauth2.AuthorizationCodeGrant(
+      "test_client",
+      Uri.parse("https://app.regtest.getalby.com/oauth"),
+      Uri.parse("https://api.regtest.getalby.com/oauth/token"),
+      secret: "test_secret");
+
+  var authorizationUrl = Uri();
+
   @override
   void onInit() async {
     await lndhubStorage.ready;
@@ -52,6 +64,7 @@ class LNDhubController extends GetxController {
     if (connection != null) {
       connectionStringController.text = connection["key"].toString();
     }
+    authorizationUrl = grant.getAuthorizationUrl(redirectUrl, scopes: scopes);
     var lightningAddress = fetchLNAddress();
     if (lightningAddress != null) {
       lnAddressController.text = lightningAddress["key"].toString();
@@ -64,6 +77,15 @@ class LNDhubController extends GetxController {
     });
     placeholderText.text = placeholder.value;
     super.onInit();
+  }
+
+  void connectAlby() async {
+    launch(authorizationUrl.toString());
+  }
+
+  void continueOauthRequest(Map<String, String> params) async {
+    var client = await grant.handleAuthorizationCode(params["code"]!);
+    print(client.credentials.toJson());
   }
 
   void initCamera() async {
