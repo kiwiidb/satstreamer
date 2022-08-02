@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'views/home.dart';
 
 void main() {
+  setPathUrlStrategy();
   runApp(GetMaterialApp(
-    home: Home(),
     title: "Sat Streamer",
+    initialRoute: '/',
+    getPages: [GetPage(name: "/", page: () => Home())],
     theme: ThemeData(
         // Define the default brightness and colors.
         brightness: Brightness.light,

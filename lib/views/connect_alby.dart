@@ -12,7 +12,7 @@ class ConnectAlby extends StatelessWidget {
   Widget build(context) {
     final LNDhubController c = Get.put(LNDhubController());
     var uri = Uri.dataFromString(window.location.href);
-    if (uri.queryParameters["code"] != "") {
+    if (uri.queryParameters["code"] != null) {
       c.continueOauthRequest(uri.queryParameters);
     }
     return Column(children: [

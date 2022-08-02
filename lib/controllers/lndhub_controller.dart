@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:bech32/bech32.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +14,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
+
+import 'package:http/http.dart' as http;
 
 class LNDhubController extends GetxController {
   final HomeController hc = Get.put(HomeController());
@@ -84,8 +85,21 @@ class LNDhubController extends GetxController {
   }
 
   void continueOauthRequest(Map<String, String> params) async {
-    var client = await grant.handleAuthorizationCode(params["code"]!);
-    print(client.credentials.toJson());
+    // Use this code to get an access token
+    var map = <String, dynamic>{};
+    map["redirect_uri"] = "http://localhost:8080";
+    map["code"] = params["code"];
+    map["grant_type"] = "authorization_code";
+    String basicAuth =
+        'Basic ' + base64.encode(utf8.encode('test_client:test_secret'));
+    final response = await http.post(
+        Uri.parse("https://api.regtest.getalby.com/oauth/token"),
+        body: map,
+        headers: <String, String>{'authorization': basicAuth});
+
+    // Get the access token from the response
+    final accessToken = jsonDecode(response.body)['access_token'] as String;
+    print(accessToken);
   }
 
   void initCamera() async {
