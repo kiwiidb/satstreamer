@@ -26,16 +26,16 @@ class LNDHubService extends GetxService {
     this.scopes = "invoices:read+account:read",
     this.authorizationHost = "getalby.com",
   });
-  //LNDHubService({
-  //  this.host = "api.regtest.getalby.com",
-  //  this.accessToken = "",
-  //  this.refreshToken = "",
-  //  this.clientId = "test_client",
-  //  this.clientSecret = "test_secret",
-  //  this.redirectUri = "http://localhost:8080/",
-  //  this.scopes = "invoices:read+account:read",
-  //  this.authorizationHost = "app.regtest.getalby.com",
-  //});
+//  LNDHubService({
+//    this.host = "api.regtest.getalby.com",
+//    this.accessToken = "",
+//    this.refreshToken = "",
+//    this.clientId = "test_client",
+//    this.clientSecret = "test_secret",
+//    this.redirectUri = "http://localhost:8080/",
+//    this.scopes = "invoices:read+account:read",
+//    this.authorizationHost = "app.regtest.getalby.com",
+//  });
 
   void connectAlby() async {
     //todo: PKCE
@@ -62,6 +62,30 @@ class LNDHubService extends GetxService {
       return payload;
     } else {
       Get.snackbar("Something went wrong fetching token", response.body,
+          snackPosition: SnackPosition.BOTTOM);
+      throw Exception('Error fetching token');
+    }
+  }
+
+  Future<AuthResponse> refreshOauth(String refresh) async {
+    //todo: remove code from url
+    var map = <String, dynamic>{};
+    map["redirect_uri"] = redirectUri;
+    map["refresh_token"] = refresh;
+    map["grant_type"] = "refresh_token";
+    String basicAuth =
+        'Basic ' + base64.encode(utf8.encode("$clientId:$clientSecret"));
+    var response = await http.post(Uri.parse("https://$host/oauth/token"),
+        body: map, headers: <String, String>{'authorization': basicAuth});
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      var payload = AuthResponse.fromJson(jsonDecode(response.body));
+      accessToken = payload.accessToken!;
+      refreshToken = payload.refreshToken!;
+      return payload;
+    } else {
+      Get.snackbar("Something went wrong refreshing token", response.body,
           snackPosition: SnackPosition.BOTTOM);
       throw Exception('Error fetching token');
     }

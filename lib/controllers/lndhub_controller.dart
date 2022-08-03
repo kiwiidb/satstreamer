@@ -49,7 +49,8 @@ class LNDhubController extends GetxController {
     await lndhubStorage.ready;
     var token = fetchOauthToken();
     if (token != null) {
-      //refresh token
+      //always refresh token first
+      token = await svc.refreshOauth(token.refreshToken!);
       svc.accessToken = token.accessToken!;
       svc.refreshToken = token.refreshToken!;
       startStream();
