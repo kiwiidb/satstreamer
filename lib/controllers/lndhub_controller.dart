@@ -9,11 +9,14 @@ import 'package:localstorage/localstorage.dart';
 import 'package:satstreamer/controllers/home_controller.dart';
 import 'package:satstreamer/models/connection.dart';
 import 'package:satstreamer/models/invoice.dart';
+import 'package:satstreamer/models/ln_address.dart';
 import 'package:satstreamer/models/lndhub_auth.dart';
 import 'package:satstreamer/service/lndhub_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+
+import '../views/home.dart';
 
 class LNDhubController extends GetxController {
   final HomeController hc = Get.put(HomeController());
@@ -49,16 +52,20 @@ class LNDhubController extends GetxController {
     await lndhubStorage.ready;
     var token = fetchOauthToken();
     if (token != null) {
-      //always refresh token first
-      token = await svc.refreshOauth(token.refreshToken!);
-      svc.accessToken = token.accessToken!;
-      svc.refreshToken = token.refreshToken!;
+      var resp = LNAddressResponse();
+      try {
+        resp = await svc.getAddress();
+      } catch (e) {
+        //try to refresh
+        token = await svc.refreshOauth(token.refreshToken!);
+        oauthCredentials = token;
+        svc.accessToken = token.accessToken!;
+        await setOAuthToken();
+        resp = await svc.getAddress();
+      }
+      lnAddress.value = resp.lightningAddress!;
+      lnAddressController.text = lnAddress.value;
       startStream();
-    }
-    var lightningAddress = fetchLNAddress();
-    if (lightningAddress != null) {
-      lnAddressController.text = lightningAddress["key"].toString();
-      lnAddress.value = lightningAddress["key"].toString();
     }
     var langs = await speaker.getLanguages;
     languages = RxList(langs);
@@ -73,8 +80,7 @@ class LNDhubController extends GetxController {
     var resp = await svc.continueOauthRequest(params);
     oauthCredentials = resp;
     await setOAuthToken();
-    //on startup, load from storage and refresh if present
-    startStream();
+    Get.offAllNamed("/");
   }
 
   void initCamera() async {
@@ -104,6 +110,8 @@ class LNDhubController extends GetxController {
   }
 
   Future<void> setOAuthToken() async {
+    var refresh = oauthCredentials.refreshToken;
+    print("In set $refresh");
     await lndhubStorage.setItem("oauth_credentials", oauthCredentials);
   }
 

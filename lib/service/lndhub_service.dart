@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:satstreamer/models/ln_address.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,26 +17,26 @@ class LNDHubService extends GetxService {
   String redirectUri;
   String scopes;
   String authorizationHost;
-  LNDHubService({
-    this.host = "api.getalby.com",
-    this.accessToken = "",
-    this.refreshToken = "",
-    this.clientId = "aCIvjyEzzV",
-    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
-    this.redirectUri = "https://satstreamer.app/",
-    this.scopes = "invoices:read+account:read",
-    this.authorizationHost = "getalby.com",
-  });
 //  LNDHubService({
-//    this.host = "api.regtest.getalby.com",
+//    this.host = "api.getalby.com",
 //    this.accessToken = "",
 //    this.refreshToken = "",
-//    this.clientId = "test_client",
-//    this.clientSecret = "test_secret",
-//    this.redirectUri = "http://localhost:8080/",
+//    this.clientId = "aCIvjyEzzV",
+//    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
+//    this.redirectUri = "https://satstreamer.app/",
 //    this.scopes = "invoices:read+account:read",
-//    this.authorizationHost = "app.regtest.getalby.com",
+//    this.authorizationHost = "getalby.com",
 //  });
+  LNDHubService({
+    this.host = "api.regtest.getalby.com",
+    this.accessToken = "",
+    this.refreshToken = "",
+    this.clientId = "test_client",
+    this.clientSecret = "test_secret",
+    this.redirectUri = "http://localhost:8080/",
+    this.scopes = "invoices:read+account:read",
+    this.authorizationHost = "app.regtest.getalby.com",
+  });
 
   void connectAlby() async {
     //todo: PKCE
@@ -68,7 +69,6 @@ class LNDHubService extends GetxService {
   }
 
   Future<AuthResponse> refreshOauth(String refresh) async {
-    //todo: remove code from url
     var map = <String, dynamic>{};
     map["redirect_uri"] = redirectUri;
     map["refresh_token"] = refresh;
@@ -88,6 +88,20 @@ class LNDHubService extends GetxService {
       Get.snackbar("Something went wrong refreshing token", response.body,
           snackPosition: SnackPosition.BOTTOM);
       throw Exception('Error fetching token');
+    }
+  }
+
+  Future<LNAddressResponse> getAddress() async {
+    //todo: remove code from url
+    var response = await http.get(Uri.parse("https://$host/user/value4value"),
+        headers: <String, String>{'authorization': accessToken});
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      var payload = LNAddressResponse.fromJson(jsonDecode(response.body));
+      return payload;
+    } else {
+      throw Exception('Error fetching ln address info');
     }
   }
 

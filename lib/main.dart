@@ -10,7 +10,10 @@ void main() {
   runApp(GetMaterialApp(
     title: "Sat Streamer",
     initialRoute: '/',
-    getPages: [GetPage(name: "/", page: () => Home())],
+    getPages: [
+      GetPage(
+          name: "/", page: () => Home(), transition: Transition.noTransition)
+    ],
     theme: ThemeData(
         // Define the default brightness and colors.
         brightness: Brightness.light,

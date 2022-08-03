@@ -31,11 +31,12 @@ class ControlPanel extends StatelessWidget {
                   children: [
                     SizedBox(
                         width: 250,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            const Text("Connected to: "),
-                            Text("$host"),
+                            const Text(
+                              "Connected",
+                              style: TextStyle(color: Colors.green),
+                            ),
                             TextButton(
                                 onPressed: c.disconnect,
                                 child: const Text("Disconnect")),
