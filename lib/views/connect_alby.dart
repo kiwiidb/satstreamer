@@ -43,10 +43,19 @@ class ConnectAlby extends StatelessWidget {
         children: [
           TextButton(
               onPressed: () => {
-                    launch(
-                        "https://github.com/kiwiidb/satstreamer/blob/main/README.md#Getting-started")
+                    Get.defaultDialog(
+                      title: "About",
+                      content: const SizedBox(
+                        width: 400,
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                              "With an Alby Lightning Address you can easily accept Bitcoin Lightning payments from your livestream audience. This app will show incoming payments and read their text out loud."),
+                        ),
+                      ),
+                    )
                   },
-              child: const Text("Instructions")),
+              child: const Text("About")),
           TextButton(
               onPressed: () => {launch("https://youtu.be/zAY8od3Z_LA?t=6015")},
               child: const Text("Demo")),
