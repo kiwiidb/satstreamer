@@ -33,7 +33,7 @@ class ConnectAlby extends StatelessWidget {
         ),
       ),
       ElevatedButton(
-          onPressed: () => c.connectAlby(),
+          onPressed: () => c.svc.connectAlby(),
           child: const Text("Connect your Alby account")),
       const SizedBox(
         height: 30,
