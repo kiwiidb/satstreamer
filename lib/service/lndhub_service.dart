@@ -16,26 +16,26 @@ class LNDHubService extends GetxService {
   String redirectUri;
   String scopes;
   String authorizationHost;
-//  LNDHubService({
-//    this.host = "api.getalby.com",
-//    this.accessToken = "",
-//    this.refreshToken = "",
-//    this.clientId = "aCIvjyEzzV",
-//    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
-//    this.redirectUri = "https://satstreamer.app/",
-//    this.scopes = "invoices:read+account:read",
-//    this.authorizationHost = "getalby.com",
-//  });
   LNDHubService({
-    this.host = "api.regtest.getalby.com",
+    this.host = "api.getalby.com",
     this.accessToken = "",
     this.refreshToken = "",
-    this.clientId = "test_client",
-    this.clientSecret = "test_secret",
-    this.redirectUri = "http://localhost:8080/",
+    this.clientId = "aCIvjyEzzV",
+    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
+    this.redirectUri = "https://satstreamer.app/",
     this.scopes = "invoices:read+account:read",
-    this.authorizationHost = "app.regtest.getalby.com",
+    this.authorizationHost = "getalby.com",
   });
+  //LNDHubService({
+  //  this.host = "api.regtest.getalby.com",
+  //  this.accessToken = "",
+  //  this.refreshToken = "",
+  //  this.clientId = "test_client",
+  //  this.clientSecret = "test_secret",
+  //  this.redirectUri = "http://localhost:8080/",
+  //  this.scopes = "invoices:read+account:read",
+  //  this.authorizationHost = "app.regtest.getalby.com",
+  //});
 
   void connectAlby() async {
     //todo: PKCE
