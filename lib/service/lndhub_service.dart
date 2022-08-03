@@ -16,15 +16,25 @@ class LNDHubService extends GetxService {
   String redirectUri;
   String scopes;
   String authorizationHost;
+//  LNDHubService({
+//    this.host = "api.getalby.com",
+//    this.accessToken = "",
+//    this.refreshToken = "",
+//    this.clientId = "aCIvjyEzzV",
+//    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
+//    this.redirectUri = "https://satstreamer.app/",
+//    this.scopes = "invoices:read+account:read",
+//    this.authorizationHost = "getalby.com",
+//  });
   LNDHubService({
-    this.host = "api.getalby.com",
+    this.host = "api.regtest.getalby.com",
     this.accessToken = "",
     this.refreshToken = "",
-    this.clientId = "aCIvjyEzzV",
-    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
-    this.redirectUri = "https://satstreamer.app/",
+    this.clientId = "test_client",
+    this.clientSecret = "test_secret",
+    this.redirectUri = "http://localhost:8080/",
     this.scopes = "invoices:read+account:read",
-    this.authorizationHost = "getalby.com",
+    this.authorizationHost = "app.regtest.getalby.com",
   });
 
   void connectAlby() async {
@@ -34,7 +44,7 @@ class LNDHubService extends GetxService {
   }
 
   Future<AuthResponse> continueOauthRequest(Map<String, String> params) async {
-    // Use this code to get an access token
+    //todo: remove code from url
     var map = <String, dynamic>{};
     map["redirect_uri"] = redirectUri;
     map["code"] = params["code"];

@@ -9,6 +9,7 @@ import 'package:localstorage/localstorage.dart';
 import 'package:satstreamer/controllers/home_controller.dart';
 import 'package:satstreamer/models/connection.dart';
 import 'package:satstreamer/models/invoice.dart';
+import 'package:satstreamer/models/lndhub_auth.dart';
 import 'package:satstreamer/service/lndhub_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,8 +18,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class LNDhubController extends GetxController {
   final HomeController hc = Get.put(HomeController());
   final LNDHubService svc = Get.put((LNDHubService()));
-  final TextEditingController connectionStringController =
-      TextEditingController();
   final speaker = FlutterTts();
   final LocalStorage lndhubStorage = LocalStorage('lndhub_credentials');
   var host = "".obs;
@@ -43,13 +42,17 @@ class LNDhubController extends GetxController {
   late CameraController cameraController;
   var cameraInitialized = false.obs;
   var showDefaultMsg = false.obs;
+  var oauthCredentials = AuthResponse();
 
   @override
   void onInit() async {
     await lndhubStorage.ready;
-    var connection = fetchConnectionString();
-    if (connection != null) {
-      connectionStringController.text = connection["key"].toString();
+    var token = fetchOauthToken();
+    if (token != null) {
+      //refresh token
+      svc.accessToken = token.accessToken!;
+      svc.refreshToken = token.refreshToken!;
+      startStream();
     }
     var lightningAddress = fetchLNAddress();
     if (lightningAddress != null) {
@@ -67,7 +70,8 @@ class LNDhubController extends GetxController {
 
   Future<void> continueOauthRequest(Map<String, String> params) async {
     var resp = await svc.continueOauthRequest(params);
-    //todo: store response
+    oauthCredentials = resp;
+    await setOAuthToken();
     //on startup, load from storage and refresh if present
     startStream();
   }
@@ -98,13 +102,16 @@ class LNDhubController extends GetxController {
     return gifs[_random.nextInt(gifs.length)];
   }
 
-  Future<void> setConnectionString() async {
-    await lndhubStorage
-        .setItem("connectionstring", {"key": connectionStringController.text});
+  Future<void> setOAuthToken() async {
+    await lndhubStorage.setItem("oauth_credentials", oauthCredentials);
   }
 
-  dynamic fetchConnectionString() {
-    return lndhubStorage.getItem("connectionstring");
+  AuthResponse? fetchOauthToken() {
+    var result = lndhubStorage.getItem("oauth_credentials");
+    if (result != null) {
+      return AuthResponse.fromJson(result);
+    }
+    return null;
   }
 
   Future<void> setLNAddress() async {
