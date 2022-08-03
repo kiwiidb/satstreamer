@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:satstreamer/models/ln_address.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:crypto/crypto.dart';
 import 'package:satstreamer/models/lndhub_auth.dart';
 
 class LNDHubService extends GetxService {
@@ -38,18 +38,20 @@ class LNDHubService extends GetxService {
 //    this.authorizationHost = "app.regtest.getalby.com",
 //  });
 
-  void connectAlby() async {
-    //todo: PKCE
+  void connectAlby(String codeVerifier) async {
+    var codeChallenge = sha256.convert(utf8.encode(codeVerifier)).toString();
     launch(
-        "https://$authorizationHost/oauth?client_id=$clientId&scope=$scopes&redirect_uri=$redirectUri");
+        "https://$authorizationHost/oauth?client_id=$clientId&scope=$scopes&redirect_uri=$redirectUri&code_challenge=$codeChallenge&code_challenge_method=S256");
   }
 
-  Future<AuthResponse> continueOauthRequest(Map<String, String> params) async {
+  Future<AuthResponse> continueOauthRequest(
+      Map<String, String> params, verifier) async {
     //todo: remove code from url
     var map = <String, dynamic>{};
     map["redirect_uri"] = redirectUri;
     map["code"] = params["code"];
     map["grant_type"] = "authorization_code";
+    map["code_verifier"] = verifier;
     String basicAuth =
         'Basic ' + base64.encode(utf8.encode("$clientId:$clientSecret"));
     var response = await http.post(Uri.parse("https://$host/oauth/token"),

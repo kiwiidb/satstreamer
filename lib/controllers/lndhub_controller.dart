@@ -15,6 +15,7 @@ import 'package:satstreamer/service/lndhub_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:random_string/random_string.dart';
 
 import '../views/home.dart';
 
@@ -76,8 +77,15 @@ class LNDhubController extends GetxController {
     super.onInit();
   }
 
+  void connectAlby() async {
+    var verifier = randomString(43);
+    await lndhubStorage.setItem("code_verifier", verifier);
+    svc.connectAlby(verifier);
+  }
+
   Future<void> continueOauthRequest(Map<String, String> params) async {
-    var resp = await svc.continueOauthRequest(params);
+    var verifier = lndhubStorage.getItem("code_verifier");
+    var resp = await svc.continueOauthRequest(params, verifier);
     oauthCredentials = resp;
     await setOAuthToken();
     Get.offAllNamed("/");
