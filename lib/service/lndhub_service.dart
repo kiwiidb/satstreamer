@@ -17,31 +17,33 @@ class LNDHubService extends GetxService {
   String redirectUri;
   String scopes;
   String authorizationHost;
-  LNDHubService({
-    this.host = "api.getalby.com",
-    this.accessToken = "",
-    this.refreshToken = "",
-    this.clientId = "aCIvjyEzzV",
-    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
-    this.redirectUri = "https://satstreamer.app/",
-    this.scopes = "invoices:read+account:read",
-    this.authorizationHost = "getalby.com",
-  });
 //  LNDHubService({
-//    this.host = "api.regtest.getalby.com",
+//    this.host = "api.getalby.com",
 //    this.accessToken = "",
 //    this.refreshToken = "",
-//    this.clientId = "test_client",
-//    this.clientSecret = "test_secret",
-//    this.redirectUri = "http://localhost:8080/",
+//    this.clientId = "aCIvjyEzzV",
+//    this.clientSecret = "JlM86SQg8RNQ2Ww1JWq6",
+//    this.redirectUri = "https://satstreamer.app/",
 //    this.scopes = "invoices:read+account:read",
-//    this.authorizationHost = "app.regtest.getalby.com",
+//    this.authorizationHost = "getalby.com",
 //  });
+  LNDHubService({
+    this.host = "api.regtest.getalby.com",
+    this.accessToken = "",
+    this.refreshToken = "",
+    this.clientId = "test_client",
+    this.clientSecret = "test_secret",
+    this.redirectUri = "http://localhost:8080/",
+    this.scopes = "invoices:read+account:read",
+    this.authorizationHost = "app.regtest.getalby.com",
+  });
 
   void connectAlby(String codeVerifier) async {
     var codeChallenge = sha256.convert(utf8.encode(codeVerifier)).toString();
+    //launch(
+    //    "https://$authorizationHost/oauth?client_id=$clientId&scope=$scopes&redirect_uri=$redirectUri&code_challenge=$codeChallenge&code_challenge_method=S256");
     launch(
-        "https://$authorizationHost/oauth?client_id=$clientId&scope=$scopes&redirect_uri=$redirectUri&code_challenge=$codeChallenge&code_challenge_method=S256");
+        "https://$authorizationHost/oauth?client_id=$clientId&scope=$scopes&redirect_uri=$redirectUri");
   }
 
   Future<AuthResponse> continueOauthRequest(
@@ -51,7 +53,7 @@ class LNDHubService extends GetxService {
     map["redirect_uri"] = redirectUri;
     map["code"] = params["code"];
     map["grant_type"] = "authorization_code";
-    map["code_verifier"] = verifier;
+    //map["code_verifier"] = verifier;
     String basicAuth =
         'Basic ' + base64.encode(utf8.encode("$clientId:$clientSecret"));
     var response = await http.post(Uri.parse("https://$host/oauth/token"),
