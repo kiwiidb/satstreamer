@@ -40,7 +40,7 @@ class LNDHubService extends GetxService {
 
   void connectAlby(String codeVerifier) async {
     var codeChallenge =
-        base64.encode(sha256.convert(utf8.encode(codeVerifier)).bytes);
+        base64UrlEncode(sha256.convert(utf8.encode(codeVerifier)).bytes);
     launch(
         "https://$authorizationHost/oauth?client_id=$clientId&scope=$scopes&redirect_uri=$redirectUri&code_challenge=$codeChallenge&code_challenge_method=S256");
   }
