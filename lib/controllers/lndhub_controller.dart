@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:convert/convert.dart';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -79,6 +80,7 @@ class LNDhubController extends GetxController {
 
   void connectAlby() async {
     var verifier = randomAlphaNumeric(43);
+    verifier = hex.encode(utf8.encode(verifier));
     await lndhubStorage.setItem("code_verifier", {"key": verifier});
     svc.connectAlby(verifier);
   }
