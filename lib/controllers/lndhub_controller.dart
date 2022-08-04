@@ -78,13 +78,14 @@ class LNDhubController extends GetxController {
   }
 
   void connectAlby() async {
-    var verifier = randomString(43);
-    await lndhubStorage.setItem("code_verifier", verifier);
+    var verifier = randomAlphaNumeric(43);
+    await lndhubStorage.setItem("code_verifier", {"key": verifier});
     svc.connectAlby(verifier);
   }
 
   Future<void> continueOauthRequest(Map<String, String> params) async {
-    var verifier = lndhubStorage.getItem("code_verifier");
+    await lndhubStorage.ready;
+    var verifier = lndhubStorage.getItem("code_verifier")["key"].toString();
     var resp = await svc.continueOauthRequest(params, verifier);
     oauthCredentials = resp;
     await setOAuthToken();
